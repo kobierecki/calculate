@@ -5,7 +5,7 @@ var levelNumber;
 var levelDisplay = 'level: ' + (levelNumber - 1);
 var sublevel;
 var countDown;
-var gameState = 'notStarted';
+var gameState;
 
 $('#new-game').click(newGame);
 
@@ -82,7 +82,7 @@ function pointsResume(){
 	var points = parseInt($('#points').text());
 	points += 1;
 	$('#points').text(points);
-	gameMaster();
+	roundMaster();
 }
 
 function generateEquation(numNodes) {
@@ -128,7 +128,7 @@ function stopTimer(){
 	clearInterval(countDown);
 }
 
-function gameMaster(){
+function roundMaster(){
 	levelsDisplaying();
 	
 	var equationGenerate = generateEquation(levelNumber);
@@ -146,8 +146,16 @@ function gameMaster(){
 function newGame(){	
 	levelNumber = 2;
 	sublevel = 1;
-	gameMaster();
+	roundMaster();
 	gameState = 'started';
 	setGamesElements(gameState);	
 }
+
+function gameMaster(){
+	gameState = 'notStarted'
+	setGamesElements(gameState);
+}
+
+gameMaster();
+
 })
