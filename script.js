@@ -2,12 +2,13 @@ $(function(){
 
 var operators = ['/', '*', '-', '+'];
 var levelNumber;
-var levelDisplay = 'level: ' + (levelNumber - 1);
 var sublevel;
+var points;
 var countDown;
 var gameState;
 
 $('#new-game').click(newGame);
+$('#play-again').click(newGame);
 
 function randomNumberRange(min, max) {
 	return Math.floor(Math.random() * (max - min) + min);
@@ -34,10 +35,15 @@ function setGamesElements() {
 		case 'started':
 			$('#hello').css('display', 'none');
 			$('#game').css('display', 'block');
+			$('#game-over').css('display', 'none');
 			break;
 		case 'notStarted':
 			$('#game').css('display', 'none');
-
+			$('#game-over').css('display', 'none');
+			break;
+		case 'gameOver':
+			$('#game-over').css('display', 'block');
+			$('#game').css('display', 'none');
 	}
 }
 
@@ -65,7 +71,7 @@ function levelCounter(){
 		levelNumber ++;
 		sublevel = 1;
 	} 
-	pointsResume();	
+	pointsCounter();	
 }
 
 function levelsDisplaying(){
@@ -77,9 +83,7 @@ function levelsDisplaying(){
 
 //ADDING POINTS
 
-function pointsResume(){
-	var sublevel = 1;
-	var points = parseInt($('#points').text());
+function pointsCounter(){
 	points += 1;
 	$('#points').text(points);
 	roundMaster();
@@ -115,13 +119,12 @@ function startTimer(duration) {
 
 		$('#time').text(minutes + ":" + seconds);
 
-		if (--duration < -1) {
+		if (--duration <= -1) {
 			clearInterval(countDown);
-			$('#time-container').remove();
-			$('#value').remove();
-			alert('Time is up');
+			gameState = 'gameOver';
+			setGamesElements(gameState);
 			}
-	}, 1000);
+	}, 100);
 }
 
 function stopTimer(){
@@ -130,7 +133,7 @@ function stopTimer(){
 
 function roundMaster(){
 	levelsDisplaying();
-	
+
 	var equationGenerate = generateEquation(levelNumber);
 	var equationDisplay = $('#output').text(equationGenerate).toString();
 	var equationResult = equationGenerate.getExpression().toFixed(1);
@@ -139,23 +142,26 @@ function roundMaster(){
 	inputListener(equationResult);
 	
 	stopTimer();
-	var timeToStop = 60;
+	var timeToStop = 5;
 	startTimer(timeToStop);
 }
 
 function newGame(){	
 	levelNumber = 2;
 	sublevel = 1;
-	roundMaster();
+
+	points = 0;
+	$('#points').text(points);
+
 	gameState = 'started';
-	setGamesElements(gameState);	
+	setGamesElements(gameState);
+	
+	roundMaster();
 }
 
 function gameMaster(){
 	gameState = 'notStarted'
 	setGamesElements(gameState);
 }
-
 gameMaster();
-
 })

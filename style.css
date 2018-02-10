@@ -1,3 +1,8 @@
 #wrong-number {
 	display: none;
 }
+
+body{
+	margin-top: 40vh;
+	text-align: center;
+}

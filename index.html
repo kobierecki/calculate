@@ -15,11 +15,15 @@
         <div id="game">
             <div id="output"></div>
             <input id="value" type="number">
-            <div id="time-container">Time to solve the equation <span id="time">01:00</span> minutes!</div>
+            <div id="time-container">Time left: <span id="time"></span> seconds!</div>
             <p><span id="points">0</span> points</p>
             <p><span id="level"></span></p>
             <p><span id="sublevel"></span></p>
             <p id="wrong-number">Wrong number - Try again</p>
+        </div>
+        <div id="game-over">
+            <p>You've lost</p>
+            <button id="play-again">Play again!</button>
         </div>
         <script
 			src="https://code.jquery.com/jquery-3.3.1.min.js"
